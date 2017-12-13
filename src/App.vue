@@ -1,7 +1,6 @@
 <template>
   <v-app>
-    <v-navigation-drawer app></v-navigation-drawer>
-    <v-toolbar app></v-toolbar>
+    <v-toolbar app><v-toolbar-title>SQL-Battle</v-toolbar-title></v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view></router-view>
