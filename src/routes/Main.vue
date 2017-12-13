@@ -25,25 +25,25 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       loading: true,
       quizzes: [
         {
           id: 1,
-          name: "Quiz 1"
+          name: 'Quiz 1'
         },
         {
           id: 2,
-          name: "Quiz 2"
+          name: 'Quiz 2'
         }
       ]
-    };
+    }
   },
-  created() {
-    this.loading = false;
+  created () {
+    this.loading = false
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
