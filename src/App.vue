@@ -1,6 +1,13 @@
 <template>
   <v-app>
-    <v-toolbar app><v-toolbar-title>SQL-Battle</v-toolbar-title></v-toolbar>
+    <v-toolbar app>
+      <v-btn icon v-show="$route.name !== 'Main'" @click="$router.replace('/')" absolute>
+          <v-icon dark>arrow_back</v-icon>
+        </v-btn>
+      <v-toolbar-title style="width: 100%" class="text-xs-center">
+        <router-link to="/">SQL-Battle</router-link>
+      </v-toolbar-title>
+    </v-toolbar>
     <v-content>
       <v-container fluid>
         <router-view></router-view>
@@ -11,7 +18,12 @@
 </template>
 <script>
 export default {
-  name: 'app'
+  name: 'app',
+  methods: {
+    log (log) {
+      debugger
+    }
+  }
 }
 </script>
 <style>
