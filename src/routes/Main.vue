@@ -4,11 +4,12 @@
       Daten werden geladen, bitte warten...
     </v-container>
 
-    <v-layout row wrap v-else>
+    <v-layout row wrap fill-height v-else>
       <v-flex
         xs4
         v-for="quiz in quizzes"
         :key="quiz.id"
+        fill-height
       >
         <v-card flat tile :to="{name: 'Quiz', params: { quizID: quiz.id}}" class="quiz-card">
           <v-card-text>{{quiz.name}}</v-card-text>
@@ -43,29 +44,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.quiz {
-  width: 200px;
+.quiz-card {
   height: 200px;
   line-height: 200px;
+  color: white !important;
   text-align: center;
-  display: inline-block;
-  background: #4444bb;
+  background: linear-gradient(22deg, rgb(64, 0, 94), rgb(0, 255, 221));
   margin: 0 10px;
   border: 1px solid black;
   border-radius: 5px;
-  color: white;
-}
-
-.quiz:hover {
-  background: #72a0ea;
-  color: black;
-}
-
-.quiz div {
-  font-size: 1.5em;
 }
 
 .quiz-card {
-  
+  font-size: 1.7em;
+}
+
+.quiz-card:hover div {
+  background: rgba(255, 255, 255, 0.22);
+  color: black !important;
 }
 </style>

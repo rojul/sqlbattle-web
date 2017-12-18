@@ -38,4 +38,22 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  table {
+    border: 1px solid black;
+    border-spacing: 0;
+  }
+
+  th, td {
+    padding: 11px 14px;
+  }
+
+  th {
+    font-weight: bold;
+    background: black;
+    color: white;
+  }
+
+  tr:nth-child(odd) {
+    background: rgb(199, 199, 199);
+  }
 </style>
