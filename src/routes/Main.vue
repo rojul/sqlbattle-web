@@ -36,8 +36,17 @@ export default {
       ]
     }
   },
-  created () {
+  async created () {
+    this.loading = true
+    this.quizzes = await this.getQuizzes()
     this.loading = false
+  },
+  methods: {
+    async getQuizzes () {
+      const quizzes = await fetch('/api/quizzes')
+      const temp = await quizzes.json()
+      return temp.quizzes
+    }
   }
 }
 </script>
