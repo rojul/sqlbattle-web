@@ -10,13 +10,8 @@
         v-for="quiz in quizzes"
         :key="quiz.id"
       >
-        <v-card flat tile :to="{name: 'Quiz', params: { quizID: quiz.id}}">
-          <v-card-media
-            :src="`https://unsplash.it/150/300?image=${Math.floor(Math.random() * 100) + 1}`"
-            height="150px"
-          >
+        <v-card flat tile :to="{name: 'Quiz', params: { quizID: quiz.id}}" class="quiz-card">
           <v-card-text>{{quiz.name}}</v-card-text>
-          </v-card-media>
         </v-card>
       </v-flex>
     </v-layout>
@@ -68,5 +63,9 @@ export default {
 
 .quiz div {
   font-size: 1.5em;
+}
+
+.quiz-card {
+  
 }
 </style>
