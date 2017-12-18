@@ -97,7 +97,6 @@ export default {
   },
   methods: {
     run () {
-      alert('dieser Code ist hässlich!!!')
     }
   }
 }
