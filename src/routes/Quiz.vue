@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div>
-    <h2>{{quiz.name}}</h2>
-    <h3>{{quiz.questions[questionIndex].text}}</h3>
-    </div>
+    <h4>{{quiz.name}}</h4>
+    <h2>Frage: {{quiz.questions[questionIndex].question}}</h2>
     <div>
       <v-text-field
         name="textareaStatement"
