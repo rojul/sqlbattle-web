@@ -24,16 +24,7 @@ export default {
   data () {
     return {
       loading: true,
-      quizzes: [
-        {
-          id: 1,
-          name: 'Quiz 1'
-        },
-        {
-          id: 2,
-          name: 'Quiz 2'
-        }
-      ]
+      quizzes: undefined
     }
   },
   async created () {

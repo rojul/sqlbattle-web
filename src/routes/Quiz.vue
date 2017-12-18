@@ -84,16 +84,10 @@ export default {
       }
     }
   },
-  created () {
-    this.quiz = {
-      name: 'Quiz 1',
-      questions: [
-        {
-          text: 'Selektiere alles',
-          answer: 'Select *'
-        }
-      ]
-    }
+  async created () {
+    const quiz = await fetch(`/api/quizzes/${this.quizID}`)
+    this.quiz = await quiz.json()
+    console.log(this.quiz)
   },
   methods: {
     run () {
