@@ -60,8 +60,21 @@ export default {
 
       this.result = await result.json()
 
-      if (this.result.result.length > 0) {
-        this.sqlResult = this.result.result[0]
+      if (this.result.error) {
+        alert(this.result.error)
+      } else {
+        if (this.result.result.length > 0) {
+          this.sqlResult = this.result.result[0]
+          this.goToNextQuestion()
+        }
+      }
+    },
+    goToNextQuestion () {
+      if (this.questionIndex < this.quiz.questions.length - 1) {
+        this.questionIndex++
+      } else {
+        alert('Congratulations! Quiz finished!')
+        this.$router.replace('/')
       }
     },
     onKeydown (e) {
