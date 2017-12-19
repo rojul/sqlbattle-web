@@ -9,7 +9,7 @@
       </v-toolbar-title>
     </v-toolbar>
     <v-content>
-      <v-container fluid>
+      <v-container fluid style="height: 100%">
         <router-view></router-view>
       </v-container>
     </v-content>
