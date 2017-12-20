@@ -33,10 +33,10 @@
           <v-btn fab dark small color="pink" @click="showAnswer">
             <v-icon dark>lightbulb_outline</v-icon>
           </v-btn>
-          <v-btn fab dark small color="pink" >
+          <v-btn fab dark small color="pink" @click="goToPreviousQuestion">
             <v-icon dark>skip_previous</v-icon>
           </v-btn>
-          <v-btn fab dark small color="pink" >
+          <v-btn fab dark small color="pink" @click="goToNextQuestion">
             <v-icon dark>skip_next</v-icon>
           </v-btn>
         </v-speed-dial>
@@ -92,6 +92,8 @@ export default {
       } else {
         this.sqlResult = this.result.result[0]
         if (this.result.correct) {
+          alert('Well done! Solve the next Question!')
+          this.statement = ''
           this.goToNextQuestion()
         }
       }
@@ -103,6 +105,14 @@ export default {
     goToNextQuestion () {
       if (this.questionIndex < this.quiz.questions.length - 1) {
         this.questionIndex++
+      } else {
+        alert('Congratulations! Quiz finished!')
+        this.$router.replace('/')
+      }
+    },
+    goToPreviousQuestion () {
+      if (this.questionIndex > 0) {
+        this.questionIndex--
       } else {
         alert('Congratulations! Quiz finished!')
         this.$router.replace('/')
