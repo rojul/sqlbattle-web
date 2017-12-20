@@ -46,7 +46,8 @@ export default {
 .quiz-card {
   color: white !important;
   text-align: center;
-  background: linear-gradient(22deg, rgb(64, 0, 94), rgb(0, 255, 221));
+  /* background: linear-gradient(22deg, rgb(64, 0, 94), rgb(0, 255, 221)); */
+  background: linear-gradient(43deg, #ff0000, #ff0000);
   margin: 0 10px;
   border: 1px solid black;
   border-radius: 5px;

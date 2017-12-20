@@ -12,18 +12,34 @@
           id="textareaStatement"
         ></v-text-field>
       </div>
+      <div v-if="sqlResult" id="divOutput">
+        <sql-table :fields="sqlResult.fields" :rows="sqlResult.rows"></sql-table>
+      </div>
       <div>
         <v-btn fab dark color="pink" @click="run" fixed bottom right>
           <v-icon dark>play_arrow</v-icon>
         </v-btn>
-      </div>
-      <div>
-        <v-btn fab dark color="pink" @click="showAnswer" fixed bottom left>
-          <v-icon dark>lightbulb_outline</v-icon>
-        </v-btn>
-      </div>
-      <div v-if="sqlResult" id="divOutput">
-        <sql-table :fields="sqlResult.fields" :rows="sqlResult.rows"></sql-table>
+
+        <v-speed-dial
+          v-model="fab"
+          fixed bottom left
+          direction="right"
+          transition="scale-transition"
+        >
+          <v-btn slot="activator" color="pink" dark fab hover v-model="fab">
+            <v-icon>more_horiz</v-icon>
+            <v-icon>close</v-icon>
+          </v-btn>
+          <v-btn fab dark small color="pink" @click="showAnswer">
+            <v-icon dark>lightbulb_outline</v-icon>
+          </v-btn>
+          <v-btn fab dark small color="pink" >
+            <v-icon dark>skip_previous</v-icon>
+          </v-btn>
+          <v-btn fab dark small color="pink" >
+            <v-icon dark>skip_next</v-icon>
+          </v-btn>
+        </v-speed-dial>
       </div>
     </div>
   </div>
@@ -74,8 +90,8 @@ export default {
       if (this.result.error) {
         alert(this.result.error)
       } else {
-        if (this.result.result.length > 0) {
-          this.sqlResult = this.result.result[0]
+        this.sqlResult = this.result.result[0]
+        if (this.result.correct) {
           this.goToNextQuestion()
         }
       }
