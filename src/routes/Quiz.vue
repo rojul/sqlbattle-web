@@ -14,8 +14,13 @@
       </div>
       <div>
         <v-btn fab dark color="pink" @click="run" fixed bottom right>
-        <v-icon dark>play_arrow</v-icon>
-      </v-btn>
+          <v-icon dark>play_arrow</v-icon>
+        </v-btn>
+      </div>
+      <div>
+        <v-btn fab dark color="pink" @click="showAnswer" fixed bottom left>
+          <v-icon dark>lightbulb_outline</v-icon>
+        </v-btn>
       </div>
       <div v-if="sqlResult" id="divOutput">
         <sql-table :fields="sqlResult.fields" :rows="sqlResult.rows"></sql-table>
@@ -43,6 +48,7 @@ export default {
       questionIndex: 0,
       statement: '',
       result: undefined,
+      canRunStatement: true,
 
       sqlResult: undefined
     }
@@ -53,9 +59,14 @@ export default {
   },
   methods: {
     async run () {
+      if (!this.canRunStatement) {
+        return
+      }
+
+      this.canRunStatement = false
       const result = await fetch('/api/query', {
         method: 'POST',
-        body: JSON.stringify({ db: this.quiz.db, sql: this.statement })
+        body: JSON.stringify({ db: this.quiz.db, sql: this.statement, answer: this.quiz.questions[this.questionIndex].answer })
       })
 
       this.result = await result.json()
@@ -68,6 +79,10 @@ export default {
           this.goToNextQuestion()
         }
       }
+      this.canRunStatement = true
+    },
+    showAnswer () {
+      alert(this.quiz.questions[this.questionIndex].answer)
     },
     goToNextQuestion () {
       if (this.questionIndex < this.quiz.questions.length - 1) {
