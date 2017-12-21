@@ -1,7 +1,7 @@
 <template>
   <div v-if="quiz" style="height: 100%">
     <h4>{{quiz.name}}</h4>
-    <h2>Frage: {{quiz.questions[questionIndex].question}}</h2>
+    <h2>Frage {{questionIndex + 1}} / {{quiz.questions.length}}: {{quiz.questions[questionIndex].question}}</h2>
     <div id="divBody">
       <div id="divInput">
         <v-text-field
@@ -72,6 +72,7 @@ export default {
   async created () {
     const quiz = await fetch(`/api/quizzes/${this.quizID}`)
     this.quiz = await quiz.json()
+    this.page = this.questionIndex + 1
   },
   methods: {
     async run () {
@@ -92,7 +93,7 @@ export default {
       } else {
         this.sqlResult = this.result.result[0]
         if (this.result.correct) {
-          alert('Well done! Solve the next Question!')
+          setTimeout(() => alert('Well done! Solve the next Question!'), 0)
           this.statement = ''
           this.goToNextQuestion()
         }
