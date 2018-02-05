@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Main from '@/routes/Main'
 import Quiz from '@/routes/Quiz'
 import Config from '@/routes/Config'
+import ConfigDB from '@/routes/ConfigDB'
 
 Vue.use(Router)
 
@@ -23,6 +24,12 @@ export default new Router({
       path: '/config',
       name: 'Config',
       component: Config
+    },
+    {
+      path: '/config/db/:dbID',
+      props: true,
+      name: 'ConfigDB',
+      component: ConfigDB
     }
   ]
 })

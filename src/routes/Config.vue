@@ -11,7 +11,7 @@
         :key="db.id"
       >
         <!-- <v-card flat tile :to="{name: 'Quiz', params: { quizID: quiz.id}}" class="quiz-card"> -->
-        <v-card class="quiz-card">
+        <v-card flat tile :to="{name: 'ConfigDB', params: { dbID: db.id}}" class="config-card">
           <v-card-text>{{db.id}}</v-card-text>
         </v-card>
       </v-flex>
@@ -51,26 +51,26 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-.quiz-card {
-  color: white !important;
+.config-card {
+  color: rgb(0, 0, 0) !important;
   text-align: center;
   /* background: linear-gradient(22deg, rgb(64, 0, 94), rgb(0, 255, 221)); */
-  background: linear-gradient(43deg, #ff0000, #ff0000);
+  background: linear-gradient(43deg, #3cff00, #3cff00);
   margin: 0 10px;
   border: 1px solid black;
   border-radius: 5px;
 }
 
-.quiz-card div {
+.config-card div {
   height: 200px !important;
 }
 
-.quiz-card {
+.config-card {
   font-size: 1.75em;
 }
 
-.quiz-card:hover div {
-  background: rgba(255, 255, 255, 0.22);
-  color: black !important;
+.config-card:hover div {
+  background: rgba(0, 0, 0, 0.22);
+  color: rgb(255, 255, 255) !important;
 }
 </style>

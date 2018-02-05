@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-toolbar app>
-      <v-btn icon v-show="$route.name !== 'Main'" @click="$router.replace('/')" absolute>
+      <v-btn icon v-show="$route.name !== 'Main'" @click="$router.go('-1')" absolute>
           <v-icon dark>arrow_back</v-icon>
         </v-btn>
       <v-toolbar-title style="width: 100%" class="text-xs-center">

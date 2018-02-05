@@ -33,8 +33,8 @@
           <v-btn fab dark small color="pink" @click="showAnswer">
             <v-icon dark>lightbulb_outline</v-icon>
           </v-btn>
-          <v-btn fab dark small color="pink" @click="goToPreviousQuestion">
-            <v-icon dark>skip_previous</v-icon>
+          <v-btn fab dark small color="pink" @click="goToPreviousQuestion" v-show="questionIndex > 0">
+            <v-icon dark>skip_previous</v-icon> 
           </v-btn>
           <v-btn fab dark small color="pink" @click="goToNextQuestion">
             <v-icon dark>skip_next</v-icon>
@@ -114,9 +114,6 @@ export default {
     goToPreviousQuestion () {
       if (this.questionIndex > 0) {
         this.questionIndex--
-      } else {
-        alert('Congratulations! Quiz finished!')
-        this.$router.replace('/')
       }
     },
     onKeydown (e) {
