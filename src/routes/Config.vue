@@ -16,6 +16,11 @@
         </v-card>
       </v-flex>
     </v-layout>
+    <div>
+      <v-btn fab dark color="pink" @click="createDB" fixed bottom right>
+        <v-icon dark>create</v-icon>
+      </v-btn>
+    </div>
   </v-container>
 </template>
 
@@ -44,6 +49,21 @@ export default {
       const databases = await fetch('/api/databases')
       const temp = await databases.json()
       return temp.databases
+    },
+    async createDB () {
+      const name = prompt('Enter DB Title')
+
+      const result = await fetch(`/api/databases/${name}`, {
+        method: 'PUT',
+        body: JSON.stringify({ sql: '' })
+      })
+
+      const {error} = await result.json()
+      if (error) {
+        alert(error)
+      } else {
+        alert('Create successful')
+      }
     }
   }
 }

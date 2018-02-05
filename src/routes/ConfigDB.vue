@@ -48,6 +48,8 @@ export default {
       const {error} = await result.json()
       if (error) {
         alert(error)
+      } else {
+        alert('Update successful')
       }
     },
     async deletee () {
@@ -57,6 +59,8 @@ export default {
       const {error} = await result.json()
       if (error) {
         alert(error)
+      } else {
+        this.$router.push('/config')
       }
     }
   }
