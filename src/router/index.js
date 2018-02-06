@@ -4,6 +4,7 @@ import Main from '@/routes/Main'
 import Quiz from '@/routes/Quiz'
 import Config from '@/routes/Config'
 import ConfigDB from '@/routes/ConfigDB'
+import ConfigQuizzes from '@/routes/ConfigQuizzes'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       props: true,
       name: 'ConfigDB',
       component: ConfigDB
+    },
+    {
+      path: '/config/quizzes/:id',
+      name: 'ConfigQuizzes',
+      component: ConfigQuizzes
     }
   ]
 })

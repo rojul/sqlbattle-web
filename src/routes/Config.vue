@@ -3,21 +3,40 @@
     <v-container v-if="loading">
       Daten werden geladen, bitte warten...
     </v-container>
-
-    <v-layout row wrap v-else>
-      <v-flex
-        xs12 md6 lg4
-        v-for="db in databases"
-        :key="db.id"
-      >
-        <!-- <v-card flat tile :to="{name: 'Quiz', params: { quizID: quiz.id}}" class="quiz-card"> -->
-        <v-card flat tile :to="{name: 'ConfigDB', params: { dbID: db.id}}" class="config-card">
-          <v-card-text>{{db.id}}</v-card-text>
-        </v-card>
-      </v-flex>
-    </v-layout>
+    <template v-else>
+      <div>DBs:</div>
+      <v-layout row wrap>
+        <v-flex
+          xs12 md6 lg4
+          v-for="db in databases"
+          :key="db.id"
+        >
+          <!-- <v-card flat tile :to="{name: 'Quiz', params: { quizID: quiz.id}}" class="quiz-card"> -->
+          <v-card flat tile :to="{name: 'ConfigDB', params: { dbID: db.id}}" class="config-card">
+            <v-card-text>{{db.id}}</v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+      <div>Quizzes:</div>
+      <v-layout row wrap>
+        <v-flex
+          xs12 md6 lg4
+          v-for="quiz in quizzes"
+          :key="quiz.id"
+        >
+          <v-card flat tile class="config-card"
+            :to="{ name: 'ConfigQuizzes', params: { id: quiz.id } }"
+          >
+            <v-card-text>{{ quiz.name }}</v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
+    </template>
     <div>
-      <v-btn fab dark color="pink" @click="createDB" fixed bottom right>
+      <v-btn fab dark color="pink" @click="createDB" fixed bottom left>
+        <v-icon dark>create</v-icon>
+      </v-btn>
+      <v-btn fab dark color="pink" @click="createQuiz" fixed bottom right>
         <v-icon dark>create</v-icon>
       </v-btn>
     </div>
@@ -64,6 +83,10 @@ export default {
       } else {
         alert('Create successful')
       }
+    },
+    createQuiz () {
+      const id = prompt('Enter Quiz Id')
+      this.$router.push({ name: 'ConfigQuizzes', params: { id, newQuiz: true } })
     }
   }
 }
