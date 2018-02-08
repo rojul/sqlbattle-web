@@ -1,46 +1,66 @@
 <template>
-  <div v-if="quiz" style="height: 100%">
-    <h4>{{quiz.name}}</h4>
-    <h2>Frage {{questionIndex + 1}} / {{quiz.questions.length}}: {{quiz.questions[questionIndex].question}}</h2>
-    <div id="divBody">
-      <div id="divInput">
-        <v-text-field
-          name="textareaStatement"
-          label="SQL Statement"
-          textarea
-          v-model="statement"
-          id="textareaStatement"
-        ></v-text-field>
+  <div v-if="!quizFinished">
+    <div v-if="quiz" style="height: 100vh">
+      <h4>{{quiz.name}}</h4>
+      <h2>Frage {{questionIndex + 1}} / {{quiz.questions.length}}: {{quiz.questions[questionIndex].question}}</h2>
+      <div id="divBody">
+        <div id="divInput">
+          <v-text-field
+            name="textareaStatement"
+            label="SQL Statement"
+            textarea
+            v-model="statement"
+            id="textareaStatement"
+          ></v-text-field>
+        </div>
+        <div v-if="sqlResult" id="divOutput">
+          <sql-table :fields="sqlResult.fields" :rows="sqlResult.rows"></sql-table>
+        </div>
+        <v-container>
+          <v-layout justify-center>
+            <v-flex xs8>
+              <v-card>
+                <v-card-text>
+                  <v-pagination v-bind:length="quiz.questions.length" v-model="page" @input="pageSelected"></v-pagination>
+                </v-card-text>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+        <div>
+          <v-btn fab dark color="pink" @click="run" fixed bottom right>
+            <v-icon dark>play_arrow</v-icon>
+          </v-btn>
+          <v-speed-dial
+            v-model="fab"
+            fixed bottom left
+            direction="right"
+            transition="scale-transition"
+          >
+            <v-btn slot="activator" color="pink" dark fab hover v-model="fab">
+              <v-icon>more_horiz</v-icon>
+              <v-icon>close</v-icon>
+            </v-btn>
+            <v-btn fab dark small color="pink" @click="showAnswer">
+              <v-icon dark>lightbulb_outline</v-icon>
+            </v-btn>
+            <v-btn fab dark small color="pink" @click="goToPreviousQuestion" v-show="questionIndex > 0">
+              <v-icon dark>skip_previous</v-icon> 
+            </v-btn>
+            <v-btn fab dark small color="pink" @click="goToNextQuestion">
+              <v-icon dark>skip_next</v-icon>
+            </v-btn>
+          </v-speed-dial>
+        </div>
       </div>
-      <div v-if="sqlResult" id="divOutput">
-        <sql-table :fields="sqlResult.fields" :rows="sqlResult.rows"></sql-table>
-      </div>
-      <div>
-        <v-btn fab dark color="pink" @click="run" fixed bottom right>
-          <v-icon dark>play_arrow</v-icon>
-        </v-btn>
-
-        <v-speed-dial
-          v-model="fab"
-          fixed bottom left
-          direction="right"
-          transition="scale-transition"
-        >
-          <v-btn slot="activator" color="pink" dark fab hover v-model="fab">
-            <v-icon>more_horiz</v-icon>
-            <v-icon>close</v-icon>
-          </v-btn>
-          <v-btn fab dark small color="pink" @click="showAnswer">
-            <v-icon dark>lightbulb_outline</v-icon>
-          </v-btn>
-          <v-btn fab dark small color="pink" @click="goToPreviousQuestion" v-show="questionIndex > 0">
-            <v-icon dark>skip_previous</v-icon> 
-          </v-btn>
-          <v-btn fab dark small color="pink" @click="goToNextQuestion">
-            <v-icon dark>skip_next</v-icon>
-          </v-btn>
-        </v-speed-dial>
-      </div>
+    </div>
+  </div>
+  <div v-else>
+    <div>
+      <h1 align=center>Well done!<br/>You solved the quiz "{{quiz.name}}"!</h1>
+      <h2 align=center>Time needed: {{msToTime(endTime - startTime)}}</h2>
+      <h2 align=center>Questions solved: {{questionIndex + 1}}</h2>
+      <v-btn @click.native="backToMenu">Back To Menu</v-btn>
     </div>
   </div>
 </template>
@@ -65,6 +85,10 @@ export default {
       statement: '',
       result: undefined,
       canRunStatement: true,
+
+      quizFinished: false,
+      startTime: Date.now(),
+      endTime: undefined,
 
       sqlResult: undefined
     }
@@ -106,9 +130,11 @@ export default {
     goToNextQuestion () {
       if (this.questionIndex < this.quiz.questions.length - 1) {
         this.questionIndex++
+        this.page++
       } else {
         alert('Congratulations! Quiz finished!')
-        this.$router.replace('/')
+        this.quizFinished = true
+        this.endTime = Date.now()
       }
     },
     goToPreviousQuestion () {
@@ -124,6 +150,21 @@ export default {
         e.preventDefault()
         this.run()
       }
+    },
+    msToTime (duration) {
+      const leftPad = i => i < 10 ? '0' + Math.floor(i) : Math.floor(i)
+      const seconds = leftPad((duration / 1000) % 60)
+      const minutes = leftPad((duration / (1000 * 60)) % 60)
+      const hours = leftPad((duration / (1000 * 60 * 60)) % 24)
+
+      return `${hours}:${minutes}:${seconds}`
+    },
+    backToMenu () {
+      this.$router.replace('/')
+    },
+    pageSelected (value) {
+      this.questionIndex = value - 1
+      this.page = value
     }
   },
   mounted () {
